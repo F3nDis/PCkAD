@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<training>
+    <storemodels> 0 </storemodels> <!-- 0: no, 1: si -->
+    <clustering> 0 </clustering> <!-- 0: no, 1: si -->
+    <kp> 0.1 </kp> <!-- percentuale utilizzata per determinare il valore di k, per il k clustering -->
+</training>

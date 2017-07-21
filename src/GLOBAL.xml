@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<global>
+    <n> 7 </n> <!-- Espressa in byte -->
+    <lck> 21 </lck> <!-- Espressa in byte -->
+    <strategy> 0 </strategy> <!-- 0: GS, 1: LS, 2: 2LS -->
+    <format> 0 </format> <!-- 0: PCAP, 1: TXT -->
+    
+    <targets> <!-- 0: HTTP, 1: FTP 21 -->
+        <protocol id = "0">
+            <port dir = "1"> 80 </port> <!-- 1: incoming, 0: outgoing -->
+            <threshold> 0.4 </threshold>
+        </protocol>
+    </targets>
+</global>
