@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kclustering>
+    <k> 4 </k> <!--Non utilizzabile, per ora-->
+    <distance> 3 </distance> <!-- ED_COMP 0, LCS_COMP 1, LCSEQ_COMP 2, LC_ED_COMP 3-->
+</kclustering>

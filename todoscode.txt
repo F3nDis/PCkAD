@@ -1,0 +1,44 @@
+In pckad_if.c
+funzione: load_pckad_models
+commento: controllo di consistenza dei dati
+
+//        if(*n != pckad->scnfg->gc->n || *lck != pckad->scnfg->gc->lck)
+//        {
+//
+//            destroy_glist(pckad->models);
+//            pckad->models = NULL;
+//            destroy_glist(tmp);
+//            free(fname_handle);
+//
+//            if (closedir (d))//chiudo la cartella
+//            {
+//                fprintf (stderr, "Could not close '%s': %s\n", models_path, strerror (errno));
+//                //exit (EXIT_FAILURE);
+//            }
+//
+//            free(n);
+//            free(lck);
+//            free(strategy);
+//            return;
+//        }
+//        else if(*strategy != TWOLS_STR)
+//        {
+//            if(*strategy != pckad->scnfg->gc->strategy)
+//            {
+//                destroy_glist(pckad->models);
+//                pckad->models = NULL;
+//                destroy_glist(tmp);
+//                free(fname_handle);
+//
+//                if (closedir (d))//chiudo la cartella
+//                {
+//                    fprintf (stderr, "Could not close '%s': %s\n", models_path, strerror (errno));
+//                    //exit (EXIT_FAILURE);
+//                }
+//
+//                free(n);
+//                free(lck);
+//                free(strategy);
+//                return;
+//            }
+//        }
