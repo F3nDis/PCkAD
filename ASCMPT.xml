@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<zscore>
-    <ngthreshold> 2.0 </ngthreshold>
-    <distance> 0 </distance> <!-- 0: z-score, 1: etc. -->
-    <strcmp> 0 </strcmp> <!-- ED_COMP 0, LCS_COMP 1, LCSEQ_COMP 2-->
-</zscore>
