@@ -13,10 +13,10 @@ Authors:
 
 
 PCkAD is a novel semi-supervised anomaly-based IDS (Intrusion Detection System) technique, 
-which is able to detect application level content-based attacks. 
-Its peculiarity is to learn legitimate payloads by splitting packets in chunks and determining 
-the within packet distribution of n-grams. 
-This strategy is resistant to evasion techniques as blending.
+which is able to detect application level content-based attacks, such as web attacks. 
+In particular, PCkAD learns legitimate traffic by splitting network packet payloads
+in portions of equal length, called chunks, and determining the within packet distribution of n-grams. 
+This strategy makes PCkAD resistant to evasion techniques as blending.
 
 
 
