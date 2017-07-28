@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<detection>
-    <supmodels> 0 </supmodels> <!-- 0: no, 1: si -->
-    <alerts> 0 </alerts> <!-- 0: no, 1: si -->
-    <mechanism> 0 </mechanism> <!-- 0: distance + perfect matching, 1: distance + partial matching -->
-</detection>
