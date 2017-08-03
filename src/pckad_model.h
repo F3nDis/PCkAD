@@ -19,125 +19,118 @@
 #define MODEL_OMEM 2
 #define MODEL_FOUND 3
 
-/* First class ADT per nascondere la struttura dati contenente gli ngram */
+/* First class ADT to hide any detail concerning the data structure containing the ngrams */
 typedef struct mdlcr model_core;
 
 typedef struct pckad_model
 {
-    model_core *core;// struttura dati che conterrà gli n-gram e relativi dati
+    model_core *core;// data structure that contains ngrams and data pertaining their distribution
     unsigned long obsv_pkts;
-    unsigned int nr_of_seqs;//indica il numero totale di sequenze memorizzate nel profilo
-    // per le lunghezze a seguire viene usato int per eventuali utilizzi del sistema su flussi di dati
-    unsigned int min_pkt_len;// la più piccola lunghezza osservata dei pacchetti inseriti nel cluster
-    unsigned int max_pkt_len;// la più grande lunghezza osservata dei pacchetti inseriti nel cluster
+    unsigned int nr_of_seqs;//shows the total number of ngrams stored in a model
+    // for the following lengths, int is used for possible uses of data flow (instead of network packets)
+    unsigned int min_pkt_len;//  the smallest packet length observed in the profile
+    unsigned int max_pkt_len;// the longest packet length observed in the profile
     unsigned short port;
     unsigned short mdl_id;
     char is_dest;
-    char spk_id;// serve per identificare la porzione del pacchetto ritenuta utile ai fini dell'analisi
+    char spk_id;// used to determine the type of packet payload
 }pckad_model;
 
 /**
- inizializza la struttura dati pckad_model a partire da un pacchetto rappresentativo.
+ Initialises the pckad_model data structure starting from a representative packet ppkt.
  
- @param ppkt pacchetto di rete da cui vengono estratti dati che caratterizzano uno specifico profilo di traffico.
- @param prtn_idx indice indicante la posizione della porzione del pacchetto di interesse per il modello.
+ @param ppkt network packet from which data characterising a specific network traffic profile are extracted.
+ @param prtn_idx index that represents the position of the payload portion of interest.
  
- @return la struttura dati inizializzata oppure NULL in caso mancanza di memoria.
+ @return the initialised data structure or NULL if no memory is available.
  */
 pckad_model* create_model(pckad_pkt *ppkt, unsigned int prtn_idx);
 
 /**
- effettua il confronto tra due modelli dati in input.
+ Compares two models p1 and p2.
  
- @return 1 se p1 > p2, -1 se p1 < p2, 0 altrimenti.
+ @return 1 if p1 > p2, -1 if p1 < p2, 0 otherwise.
  */
 char compare_model (void * p1, void* p2);
 
 /**
- rilascia la memoria allocata per il modello dato in input.
+ Frees mdl
  
- @param mdl il modello da rilasciare.
+ @param mdl the model to free.
  */
 void free_model (pckad_model* mdl);
 
 /**
- rilascia la memoria allocata per una struttura ngram_data.
+ Frees the memory allocated for nd.
  
- @param nd l'oggetto di cui rilasciare la memoria.
+ @param nd the object to free.
  */
 void free_ngram_data(ngram_data *nd);
 
 /***
- Controlla se esiste ngram nella struttura dati, in caso di esito
- positivo restituisce la struttura dati contenente i dati associati
- alla query. In caso contrario viene restituito NULL. Data la natura del
- risultato, la funzione può essere utilizzata anche solamente per interrogare
- la presenza del ngram.
+Checks if there exists a ngram in mdlcore. If true it returns
+the data structure containing data associated to the query, else it returns NULL.
+The function can also be employed just to check whether a ngram is stored.
  
- @param mdlcore componente del modello in cui sono memorizzati dati raccolti durante il training.
- @param ngram   da aggiungere.
- @param len     lunghezza del ngram.
- @param retcode puntatore ad un intero indicante il risultato dell'operazione.
+ @param mdlcore Component of the model that stores the data collected during the training phase.
+ @param ngram   ngram to add.
+ @param len     ngram length.
+ @param retcode pointer to the operation result.
  
- @return la struttura dati contenente i dati associati al ngram.
+ @return structure containing data associated to ngram.
  */
 ngram_data* get_ngrdata(model_core *mdlcore, unsigned char *ngram, char len, int *retcode);
 
 /**
- Aggiunge un nuovo ngram nella struttura dati, con annessi dati.
- La funzione riserva nuova memoria per ngram, in caso di aggiunta, mentre
- l'oggetto ngdt viene condiviso.
- Restituisce un codice indicante l'esito dell'operazione.
+ Adds a new ngram to the data structure, as well as its data.
+ The function reserves new memory for ngram, in case of insertion, while ngdt is shared.
+ Returns a code that denotes the operation result.
  
- @param mdlcore componente del modello in cui sono memorizzati dati raccolti durante il training.
- @param ngram ngram da aggiungere.
- @param len lunghezza del ngram.
- @param ngdt i dati associati al ngram.
+ @param mdlcore Component of the model that stores the data collected during the training phase.
+ @param ngram   ngram to add.
+ @param len     ngram length.
+ @param ngdt    data related to ngram.
  
- @return codice indicante l'esito dell'operazione 
- i) l'operazione ha successo;
- ii) l'operazione fallisce data la presenza del ngram nella struttura dati;
- iii) l'operazione fallisce per errori terzi.
+ @return code denoting the operation result:
+ i) the operation succedes;
+ ii) the operation fails due to the presence of ngram in the data structure;
+ iii) the operation fails due to other types of errors.
  */
 int add_ngrdata(model_core *mdlcore, unsigned char *ngram, char len, ngram_data *ngdt);
 
 /**
- restituisce tutti gli ngram contenuti nella struttura dati, necessari
- per interrogare il modello.
- NB implementazione temporanea (motivi di efficienza).
+ Returns all the ngrams contained in the data structure needed to query the model.
+ NB temporary implementation (efficiency reasons).
  
- @param mdlcore componente del modello in cui sono memorizzati dati raccolti durante il training.
- @param len     puntatore alla lunghezza dell'array (deve essere inizializzato).
+ @param mdlcore Component of the model that stores the data collected during the training phase.
+ @param len     pointer to the array length (it must be initialised).
  
- @return array contenente i puntatori agli oggetti ngram_obj.
+ @return array containing the pointers to the ngram_obj objects.
  */
 ngram_obj** getall_ngrams(model_core *mdlcore, int *len);
 
 /**
- salva il contenuto dei modelli della lista mdls in uno o più file binari.
- Nello specifico, viene creato un file per ogni insieme di modelli che condividono
- <porta, direzione, codice pacchetto>.
+ Stores the models contained in mdls in one or more binary files.
+ specifically, for each set of models, identified by the triple <port, direction, packet code>, a new file is created.
  
- @param path percorso di destinazione dei file.
- @param mdls lista contenente i modelli da salvare in memoria secondaria.
- @param n lunghezza degli ngram.
- @param lck lunghezza di un chunk.
- @param strategy strategia di training e classificazione (GS, LS, 2LS). Determina la natura di un modello.
+ @param path destination path for the files.
+ @param mdls list containing the models to store.
+ @param n ngram length.
+ @param lck chunk length.
+ @param strategy used to choose the training and classification strategy (GS, LS, 2LS).
  */
 void store_models(const char* path, glist *mdls, unsigned char n, unsigned short lck, char strategy);
 
 /**
- carica il contenuto dei modelli contenuti in un file binario il cui percorso specificato da path.
- Viene controllato che i parametri di input n, lck e strategy (relativi alla configurazione corrente
- del sistema), siano coerenti con i valori indicati dal file.
+ Loads the models stored in a binary file whose path is provided by path.
+ The input parameters n, lck and strategy are set with the values read from the file.
  
- @param path percorso del file sorgente contenente la rappresentazione binaria dei modelli.
- @param n lunghezza degli ngram specificata nel file di configurazione.
- @param lck lunghezza di un chunk specificata nel file di configurazione.
- @param strategy strategia di training e classificazione (GS, LS, 2LS). Determina la natura di un modello
- specificata nel file di configurazione.
+ @param path source file path containing the binary representation of the models.
+ @param n pointer to the ngram length read from the file, after the execution.
+ @param lck pointer to the chunk length read from the file, after the execution.
+ @param strategy pointer to the strategy read from the file, after the execution.
  
- @return lista dei modelli caricati dal file specificato in path.
+ @return list containing the models loaded from the file.
  */
 glist* load_models (const char* path, unsigned char *n, unsigned short *lck, char *strategy);
 
