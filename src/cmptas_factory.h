@@ -12,15 +12,13 @@
 #include "core_functionalities.h"
 
 /*
- get_compute_as:
- ===============
- implementa un factory per la funzione di calcolo dell'indice
- di anomalia di un'unità dati.
+ Provides the factory function of functions that compute the anomaly score of a network packet.
+ It takes two input parameters, that are flags used to choose how to compute the anomaly score.
  
- @strategy: discriminante della strategia di apprendimento.
- @mechanism: discriminante dell'algoritmo impiegato per il calcolo dell'indice di anomalia.
+ @strategy: Flag for choosing the classification strategy.
+ @mechanism: Flag for choosing the mechanism for computing the anomaly score.
  
- returns: puntatore alla funzione inplementa la strategia desiderata.
+ returns: Pointer to the function that implements the desired anomaly score.
  */
 compute_as get_compute_as(char strategy, char mechanism);
 
