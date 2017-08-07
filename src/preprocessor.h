@@ -15,50 +15,42 @@
 #define PRPROC_INIT_OK 4
 #define PRPROC_INIT_FAIL 5
 #define PRPROC_MALFORMED 6
-#define PRPROC_UNINTERESTING 7 // per pacchetti di cui non è richiesta l'elaborazione
-#define PRPROC_UNSUPPORTED 8 // per protocolli non ancora supportati dal sistema
+#define PRPROC_UNINTERESTING 7 // Types of packets to ignore
+#define PRPROC_UNSUPPORTED 8 // Protocol not yet supported
 #define PRPROC_OK 9
 
-/*Struttura contenente i dati richiesti dal modulo di pre elaborazione.*/
+/*Data structure containing network packet-related data.*/
 typedef struct prp_data
 {
     unsigned char *pkt_payload;
-    unsigned int len;// lunghezza del contenuto di un pacchetto
-    unsigned short port;// porta dell'intestazione TCP
-    char dirc;//consente di capire se la porta corrisponde alla destinazione o sorgente
+    unsigned int len;// payload length
+    unsigned short port;// TCP port
+    char dirc;// packet direction
 }prp_data;
 
 
 /*
- preprocessor_init:
- ==================
- esegue l'inizializzazione del modulo di pre elaborazione.
+ Initialises the module
+
+ @cnfs_path: Configuration file path for the preprocessing modules.
  
- @cnfs_path: percorso della cartella dei file di configurazione per i moduli di pre
- elaborazione.
- 
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: A code representing the operation result.
  */
 int preprocessor_init(const char *cnfs_path);
 
 /*
- preprocess:
- ===========
- elabora il pacchetto ricevuto in input e deriva la rappresentazione
- interna, oggetto di analisi nelle fasi successive.
+ A network packet payload, contained in pdata, is processed to build a PCkAD packet for the subsequent phases.
+
+ @ppkt: A PCkAD packet, derived from a network packet payload.
+ @pdata: A network packet payload to convert to a PCkAD packet.
  
- @ppkt: struttura dati contenente la rappresentazione interna del pacchetto.
- @pdata: struttura dati contenente i dati richiesti dal modulo di pre elaborazione.
- 
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: A code representing the operation result.
  */
 int preprocess (pckad_pkt *ppkt, prp_data *pdata);
 
 
 /*
- preprocessor_destr:
- ===================
- rilascia le risorse alloccate per i moduli di pre elaborazione.
+ Frees the memory reserved for the pre-processing modules.
  */
 void preprocessor_destr();
 
