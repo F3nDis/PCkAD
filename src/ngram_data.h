@@ -9,19 +9,24 @@
 #ifndef ngram_data_h
 #define ngram_data_h
 
-/*Racchiude le statistiche calcolate per un ngram in un chunk*/
+/* Contains the statistics computed the for a ngram */
 typedef struct ngram_stats
 {
-    float avg_occ; // contiene le occorrenze medie di apparizione per ogni posizione
-    float std_dev;
-    unsigned int obsv_pkts; // riferimento ai pacchetti in cui la sequenza è stata osservata (per ogni posizione)
+    float avg_occ; // represents the average of occurrences
+    float std_dev;//standard deviation associated to avg_occ
+    unsigned int obsv_pkts; // number of packets in which the ngram has been observed
     
-    unsigned int supp;// occ_per_pkts per LS - nr_wosp per GS
+    float supp;// used for wholesomely auxiliary computations
 }ngram_stats;
 
-/*Utilizzo il pattern FIRST-CLASS ADT per astrarre la struttura dati*/
+/* Abstraction for the structure containing ngram-related data*/
 typedef struct ngram_data ngram_data;
 
+/*
+ creates an instance of the ngram_stats structure.
+ 
+ Returns: an instance of the ngram_stats structure.
+*/
 ngram_stats* create_ngram_stats();
 
 ngram_data* create_ngram_data( unsigned short chunks, char model, char strategy);
@@ -31,17 +36,15 @@ ngram_stats* get_statsofck(ngram_data *ngd, unsigned short ck);
 unsigned short usedcks(ngram_data *ngd);
 
 /**
- * Inserisce nella struttura ngram_data le statistiche Y calcolate
- * per il chunk ck.
- * NB: Non bisogna effettuare questa operazione se si sta modificando
- * il contenuto indirizzato da un puntatore ngram_stats, recuperato
- * per mezzo della funzione get_statsofck! In caso contrario, si ha
- * un comportamento indefinito. L'aggiornamento avviene automaticamente,
- * utilizzando il puntatore.
- *
- * @param ngd Struttura dati da aggiornare.
- * @param ck Indice del chunk da aggiornare.
- * @param stats Statistiche calcolate per il chunk.
+ Add to ngd the statistics pertaining the chunk indexed by ck.
+ Note that this operation must not be performed if you are working on
+ an instance of ngram_stats that has been previously retrieved by means of the function get_statsofck. 
+ In this case, undefined behaviour is expected. The content is updated by means of the
+ pointer *stats.
+ 
+ * @param ngd Data structure to update with new statistics.
+ * @param ck Index to the chunk of interest.
+ * @param stats Statistics computed for the chunk ck.
  */
 void set_statsofck(ngram_data *ngd, unsigned short ck, ngram_stats *stats);
 
