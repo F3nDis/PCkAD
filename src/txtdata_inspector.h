@@ -14,7 +14,7 @@
 #include "preprocessor.h"
 
 /*
- Checks whether the packet is valid, based on the global configuration file (see the target field).
+ Checks whether a textual packet pkt is valid, based on the global configuration file (see the target field).
  If it is then irep and prpd are initialised. It allocates memory for prpd's pkt_payload.
  
  @irep: A PCkAD packet.
