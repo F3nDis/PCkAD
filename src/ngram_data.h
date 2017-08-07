@@ -16,7 +16,7 @@ typedef struct ngram_stats
     float std_dev;//standard deviation associated to avg_occ
     unsigned int obsv_pkts; // number of packets in which the ngram has been observed
     
-    float supp;// used for wholesomely auxiliary computations
+    float supp;// used for auxiliary computations
 }ngram_stats;
 
 /* Abstraction for the structure containing ngram-related data*/
