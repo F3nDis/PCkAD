@@ -14,6 +14,7 @@
 
 #define CLMODEL_MISSING 10
 
+/* Describes the packet payload for which the anomaly score is computed. */
 typedef struct result_description
 {
     unsigned char *content;
@@ -23,25 +24,32 @@ typedef struct result_description
 }result_description;
 
 /*
- analyse_pkt:
- ============
- esegue l'operazione di classificazione del pacchetto pkt, di cui viene
- specificata la lunghezza plen, basandosi sui modelli models.
- Restituisce un codice numerico rescode per indicare l'esito
- dell'operazione e un numero decimale rappresentante l'indice di anomalia
- del pacchetto.
+ Computes the anomaly score of a network packet pkt, whose length is specified by plen. The classification is performed based on
+ the comparison between pkt's relevant payload and its matching model. The model is retrieved from models.
+ It returns a numeric code that represents the operational result. The code is assigned to the input parameter rescode.
+ Finally, it returns the anomaly score of pkt.
  
- @pkt: pacchetto di rete (intestazioni + contenuto).
- @plen: lunghezza del pacchetto di rete.
- @models: array contenente i modelli correntemente in costruzione.
- @scnfg: configurazione del sistema.
- @rescode: codice numerico indicante l'esito dell'operazione.
+ @pkt: A network packet, containing both headers and payload.
+ @plen: The packet length.
+ @models: List containing the models.
+ @scnfg: System configuration.
+ @rescode: Numeric code that represents the operational result.
  
- returns: indice di anomalia del pacchetto.
+ returns: anomaly score of pkt.
  */
 float analyse_pkt (const unsigned char *pkt, unsigned int plen, glist *models, pckad_sysconfig *scnfg, int *rescode, result_description *rd);
 
+/*
+ Creates an instance of the result_description structure.
+ 
+ Results: an instance of the result_description structure.
+*/
 result_description* create_result_description();
 
+/*
+ Frees the memory reserved for rd.
+ 
+ @rd: an instance of the result_description structure.
+*/
 void free_result_description(result_description *rd);
 #endif /* classification_module_h */
