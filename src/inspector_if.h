@@ -18,21 +18,17 @@
 #define INSPECTION_OMEM 2
 
 /*
- inspect_rawd:
- =============
- definisce la firma per le funzioni che devono interpretare uno 
- specifico formato delle unità dati. L'obiettivo di tali funzioni è 
- quello di costruire la rappresentazione interna dell'unità dati pkt,
- richiesta dal sistema, e la struttura dati prpd, richiesta dal pre
- elaboratore.
+ Function pointer that abstracts functions that interpret specific packet formats (e.g pcap and textual formats). 
+ The objective of such functions is to derive from a given network packet a PCkAD packet, used for the training and 
+ classification phases, and a temporary internal representation which is used by the preprocessing module.
  
- @irep: rappresentazione interna del pacchetto.
- @prpd: struttura dati richiesta dal modulo di pre elaborazione.
- @pkt: il pacchetto di rete grezzo (intestazioni + contenuto).
- @plen: lunghezza del pacchetto di rete grezzo.
- @sc: configurazione del sistema.
+ @irep: A PCkAD packet.
+ @prpd: An internal representation for a given network packet, used by the preprocessing module.
+ @pkt: A network packet containing headers and apayload, regardless of its format.
+ @plen: The packet length (headers + payload).
+ @sc: The system configuration.
  
- returns: 1 se valido, 0 altrimenti.
+ returns: 1 if the packet is valid, 0 otherwise.
  */
 typedef char (*inspect_rawd) (pckad_pkt *irep, prp_data *prpd, const unsigned char *pkt, unsigned int plen, pckad_sysconfig *sc);
 
