@@ -12,15 +12,13 @@
 #include "inspector_if.h"
 
 /*
- get_inspector:
- ==============
- restituisce il puntatore di una funzione che implementa l'interpretazione
- del formato dei dati richiesto dal sistema, specificato usando il parametro di input
- format.
+ Provides the factory function for functions that interpret specific packet formats with the aim of 
+ building an internal representation for network packets. It returns the pointer to the function
+ implementing the desired strategy based on the input parameter format.
  
- @format: specifica il formato dei dati grezzi.
+ @format: Flag used to choose the strategy for interpreting a specific packet format.
  
- returns: il puntatore alla funzione che interpreta il formato specificato in input.
+ returns: pointer to the function implementing the desired strategy.
  */
 inspect_rawd get_inspector(char format);
 
