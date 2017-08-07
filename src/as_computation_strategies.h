@@ -17,82 +17,60 @@
 #define CMPTAS_LCNF_OMEM 0
 
 /*
- cmptas_init:
- ============
- esegue l'inizializzazione del modulo di calcolo degli indici di anomalia.
+ Initialises the library, based on a configuration file.
  
- @cnfs_path: percorso della cartella dei file di configurazione.
+ @cnfs_path: configuration file path.
  
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: a numeric code representing the operational result.
  */
 int cmptas_init (const char *path);
 
 /**
- Rilascia le risorse allocate per la libreria cmptas.
+ Frees the memory reserved for the library.
+ 
+ returns: a numeric code representing the operational result.
  */
 int free_cmptas ();
 
 /*
- lsas_ngcomputation:
- ===================
- implementa il calcolo dell'indice di anomalia as della porzione di unità dati
- pd, impiegando lo zscore, basandosi sulla strategia LS.
- L'algoritmo analizza ogni singolo ngram ng in ciascun chunk ck di pd
- ed esegue i seguenti passi:
- 1 per ogni ck
- 1.1 se ng appartiene ad mdl ==> calcola lo zscore zs di pd
- 1.2 se ng non appartiene ad mdl ==> classifica ng come anomalo
- 2 infine, calcola as come #ng_a/#ng_t, dove #ng_a rappresenta il numero di
- ngram anomali in pd mentre #ng_t il numero totale di ngram in pd.
+ Computes the anomaly score of the relevant payload pd, by comparing pd with its matching the model mdl. 
+ The computation is based on the LS strategy and a mechanism for comparing  ngrams (e.g. Z-score).
+
+ @mdl: The model employed for the comparison.
+ @pd: The relevant payload for which the function computes the anomaly score.
+ @n: The ngram length.
+ @lck: The chunk length.
+ @mechanism: It denotes what mechanism should be used for competition (e.g. Z-score).
  
- @mdl: il modello con cui effettuare il confronto.
- @pd: il contenuto di un pacchetto di cui calcolare l'indice di anomalia.
- @n: la lunghezza di un ngram.
- @lck: la lunghezza di un chunk.
- @mechanism: indica il meccanismo da utilizzare per la classificazione (es. ZSCORE).
- 
- returns: l'indice di anomalia calcolato per pd.
+ returns: The anomaly score of pd.
  */
 float lsas_ngcomputation (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck, char mechanism);
 
 /*
- twolsas_ngcomputation:
- ======================
- implementa il calcolo dell'indice di anomalia as della porzione di unità dati
- pd, impiegando lo zscore, basandosi sulla strategia 2LS.
- L'algoritmo analizza ogni singolo ngram ng in pd e in ciascun suo chunk ck
- ed esegue un algoritmo che combina le strategie GS e LS.
- L'indice di anomalia viene calcolato come #ng_a/#ng_t, dove #ng_a rappresenta il numero di
- ngram anomali in pd mentre #ng_t il numero totale di ngram in pd.
+ Computes the anomaly score of the relevant payload pd, by comparing pd with its matching the model mdl. 
+ The computation is based on the 2LS strategy and a mechanism for comparing  ngrams (e.g. Z-score).
+
+ @mdl: The model employed for the comparison.
+ @pd: The relevant payload for which the function computes the anomaly score.
+ @n: The ngram length.
+ @lck: The chunk length.
+ @mechanism: It denotes what mechanism should be used for competition (e.g. Z-score).
  
- @mdl: il modello con cui effettuare il confronto.
- @pd: il contenuto di un pacchetto di cui calcolare l'indice di anomalia.
- @n: la lunghezza di un ngram.
- @lck: la lunghezza di un chunk.
- @mechanism: indica il meccanismo da utilizzare per la classificazione (es. ZSCORE).
- 
- returns: l'indice di anomalia calcolato per pd.
+ returns: The anomaly score of pd.
  */
 float twolsas_ngcomputation (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck, char mechanism);
 
 /*
- gsas_ngcomputation:
- ===================
- implementa il calcolo dell'indice di anomalia as della porzione di unità dati
- pd, impiegando lo zscore, basandosi sulla strategia GS.
- L'algoritmo analizza ogni singolo ngram ng in pd ed esegue i seguenti passi:
- 1.1 se ng appartiene ad mdl ==> calcola lo zscore zs di pd
- 1.2 se ng non appartiene ad mdl ==> classifica ng come anomalo
- 2 infine, calcola as come #ng_a/#ng_t, dove #ng_a rappresenta il numero di
- ngram anomali in pd mentre #ng_t il numero totale di ngram in pd.
+ Computes the anomaly score of the relevant payload pd, by comparing pd with its matching the model mdl. 
+ The computation is based on the GS strategy and a mechanism for comparing  ngrams (e.g. Z-score).
+
+ @mdl: The model employed for the comparison.
+ @pd: The relevant payload for which the function computes the anomaly score.
+ @n: The ngram length.
+ @lck: The chunk length.
+ @mechanism: It denotes what mechanism should be used for competition (e.g. Z-score).
  
- @mdl: il modello con cui effettuare il confronto.
- @pd: il contenuto di un pacchetto di cui calcolare l'indice di anomalia.
- @n: la lunghezza di un ngram.
- @lck: la lunghezza di un chunk.
- @mechanism: indica il meccanismo da utilizzare per la classificazione (es. ZSCORE).
- 
- returns: l'indice di anomalia calcolato per pd.
+ returns: The anomaly score of pd.
  */
 float gsas_ngcomputation (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck, char mechanism);
 
