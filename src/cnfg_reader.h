@@ -19,42 +19,36 @@
 #define CR_UNABLE_OPEN 2
 
 /*
- stream_gcfile
- -------------
- Legge il contenuto di un file XML, di cui viene specificato il percorso
- assoluto in filename e inizializza i campi della struttura global_cnfg.
- La struttura global_cnfg NON deve avere il campo protocols inizializzato.
+ Read the content of the global configuration file whose path is specified by filename.
+ It takes in input an instance of the global_cnfg structure. gcnfg's protocols
+ must not be initialised.
  
- @filename: il percorso assoluto del file XML contenente la configurazione globale
- @gcnfg: riferimento alla struttura dati per la configurazione globale
+ @filename: global configuration file path.
+ @gcnfg: An instance of the global_cnfg structure.
  
- returns: restituisce un intero rappresentante l'esito dell'operazione.
+ returns: code the representing the operation results.
  */
 int stream_gcfile(const char *filename, global_cnfg *gcnfg);
 
 /*
- stream_tcfile
- -------------
- Legge il contenuto di un file XML, di cui viene specificato il percorso
- assoluto in filename e inizializza i campi della struttura training_cnfg.
+ Read the content of the training configuration file whose path is specified by filename.
+ It takes in input an instance of the training_cnfg structure.
  
- @filename: il percorso assoluto del file XML contenente la configurazione di training
- @gcnfg: riferimento alla struttura dati per la configurazione di training
+ @filename: training configuration file path.
+ @gcnfg: An instance of the training_cnfg structure.
  
- returns: restituisce un intero rappresentante l'esito dell'operazione.
+ returns: code the representing the operation results.
  */
 int stream_tcfile(const char *filename, training_cnfg *tcnfg);
 
 /*
- stream_dcfile
- -------------
- Legge il contenuto di un file XML, di cui viene specificato il percorso
- assoluto in filename e inizializza i campi della struttura detection_cnfg.
+ Read the content of the detection configuration file whose path is specified by filename.
+ It takes in input an instance of the detection_cnfg structure.
  
- @filename: il percorso assoluto del file XML contenente la configurazione di detection
- @gcnfg: riferimento alla struttura dati per la configurazione di detection
+ @filename: detection configuration file path.
+ @gcnfg: An instance of the detection_cnfg structure.
  
- returns: restituisce un intero rappresentante l'esito dell'operazione.
+ returns: code the representing the operation results.
  */
 int stream_dcfile(const char *filename, detection_cnfg *dcnfg);
 
