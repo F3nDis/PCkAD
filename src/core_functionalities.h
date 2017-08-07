@@ -15,72 +15,54 @@
 #include "pckad_sysconfig.h"
 
 /*
- build_model:
- ============
- implementa la costruzione incrementale di un modello mdl, a partire dal
- contenuto rilevante pd di una porzione di pacchetto.
- Le feature considerate per la costruzione sono legate agli ngram,
- la cui lunghezza corrisponde a n, e, inoltre, si suppone che il contenuto
- sia stato logicamente suddiviso in chunk, di lunghezza pari a lck.
- NB: dato che possono esistere diversi algoritmi, a seconda della strategia scelta
- per analizzare i dati, viene adottato il pattern Strategy.
+ This function pointer abstracts functions that implement the incremental construction of a model mdl, 
+ by inspecting the relevant payload of network packets. Indeed, different algorithms can be employed for building a model.
+ The process is based on the concepts of the ngrams and chunks.
  
- @mdl: il modello da sottoporre a costruzioni incrementale.
- @pd: il contenuto di un pacchetto da cui estrarre i dati di interesse.
- @n: la lunghezza di un ngram.
- @lck: la lunghezza di un chunk.
+ @mdl: The model to build.
+ @pd: The relevant payload of a network packet.
+ @n: The ngram length.
+ @lck: The chunk length.
  */
 typedef void (*build_model) (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck);
 
 /*
- check_profile:
- ==============
- verifica se il modello mdl e il pacchetto ppkt appartengono allo stesso
- profilo.
+ Checks if the model mdl matches the relevant payload of packet ppkt, indexed by prtnidx.
  
- @mdl: modello.
- @ppkt: rappresentazione interna di un pacchetto di rete.
- @prtnidx: indice della porzione di interesse del pacchetto ppkt.
+ @mdl: Model representing a specific network traffic.
+ @ppkt: A PCkAD packet.
+ @prtnidx: Index pointing at the relevant payload to analyse.
+ @lck: The chunk length.
  
- returns: 1 in caso di esito positivo, 0 altrimenti.
+ returns: 1 if mdl matches the relevant payload, 0 otherwise.
  */
 char check_profile (pckad_model *mdl, pckad_pkt *ppkt, unsigned int prtnidx, unsigned short lck);
 
 /*
- lookfor_replacement:
- ====================
- cerca un modello per ppkt le cui caratteristiche si avvicinano a quelle
- nel profilo di appartenenza del pacchetto. Restituisce l'indice corrispondente
- al modello trovato.
+ Searches for a model that approximately matches the relevant payload of packet ppkt. 
+ It returns the index of the model.
  
- @mdls: lista contenente i modelli di cui dispone il sistema.
- @ppkt: rappresentazione interna di un pacchetto di rete.
- @prtnidx: indice della porzione di interesse del pacchetto ppkt.
- @lck: lunghezza di un chunk.
+ @mdls: List containing the models built by PCkAD.
+ @ppkt: A PCkAD packet.
+ @prtnidx: Index of the relevant payload of packet ppkt.
+ @lck: The chunk length.
  
- returns: indice del modello trovato.
+ returns: Index of the model.
  */
 unsigned int lookfor_replacement (glist *mdls, pckad_pkt *ppkt, unsigned int prtnidx, unsigned short lck);
 
 /*
- compute_as:
- ===========
- implementa il calcolo dell'indice di anomalia di una porzione di unità dati pd,
- a partire dal confronto con un modello mdl.
- Tale funzione prevede l'implementazione di una strategia basata su: 1. suddivisione
- di pd in chunk (la cui lunghezza corrisponde a lck); 2. uso degli ngram (di cui n
- rappresenta la lunghezza)per il calcolo dell'indice di anomalia.
- NB: dato che possono esistere diversi algoritmi, a seconda della strategia e del
- meccanismo scelti per analizzare i dati (si vedano i file di configurazione DETECTION e
- GLOBAL), viene adottato il pattern Strategy.
+ Function pointer that abstracts functions that compute the anomaly score of a given relevant payload pd, 
+ by comparing pd with a matching model mdl. indeed, different algorithms can be employed for this task. 
+ The computations is based on the concepts of ngrams and chunks.
+
+ @mdl: The matching model, used to compute the anomaly score.
+ @pd: The relevant payload for which the function computes the anomaly score.
+ @n: The $n$-gram length.
+ @lck: The title length.
+ @mechanism: Denotes the mechanism used for computing the anomaly score (.g. Z-score).
  
- @mdl: il modello con cui effettuare il confronto.
- @pd: il contenuto di un pacchetto di cui calcolare l'indice di anomalia.
- @n: la lunghezza di un ngram.
- @lck: la lunghezza di un chunk.
- @mechanism: indica il meccanismo da utilizzare per la classificazione (es. ZSCORE).
- 
- returns: l'indice di anomalia calcolato per pd.
+ returns: The anomaly score of pd.
  */
 typedef float (*compute_as) (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck, char mechanism);
 
