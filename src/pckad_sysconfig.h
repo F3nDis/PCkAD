@@ -33,7 +33,7 @@ typedef struct protocol_data
 {
     float threshold;
     unsigned short port;
-    char prid;// id del protocollo
+    char prid;// application protocol ID
     char dirc;
 }protocol_data;
 
@@ -50,15 +50,15 @@ typedef struct global_cnfg
 typedef struct training_cnfg
 {
     float kp;// percentuale usata per determinare il valore del parametro k, per il k clustering
-    char storemodels; // flag per il salvataggio dei modelli
+    char storemodels; // flag used to enable the storage of the models. 1: enabled, 0: disabled.
     char clustering;// utilizzata per stabilire se utilizzare il clustering
 }training_cnfg;
 
 typedef struct detection_cnfg
 {
-    char mechanism;// determina il meccanismo utilizzato alla base del processo di classificazione
-    char enable_supmodels; // flag per abilitare l'utilizzo di modelli di supporto
-    char enable_alerts; // flag per abilitare le notifiche di allarme
+    char mechanism;// The determines the mechanism used for computing the anomaly score
+    char enable_supmodels; // flag used to enable approximate models
+    char enable_alerts; // flag used to enable the alarm module (not yet supported)
 }detection_cnfg;
 
 typedef struct pckad_sysconfig
@@ -66,31 +66,34 @@ typedef struct pckad_sysconfig
     global_cnfg *gc;
     training_cnfg *tc;
     detection_cnfg *dc;
-    //TODO: manca la configurazione per il modulo di allarme
+    //TODO: next: alarm module configuration
 }pckad_sysconfig;
 
 /*
- create_pckad_sysconfig:
- =======================
- crea la struttura dati pckad_sysconfig.
- Restituisce NULL nel caso non fosse disponibile sufficiente memoria.
+ Creates an instance of the pckad_sysconfig structure.
+ It returns NULL if there is no sufficient memory.
  
- returns: un'istanza della struttura dati pckad_sysconfig. NULL con memoria insufficiente.
+ returns: an instance of the pckad_sysconfig structure. NULL if there is not sufficient memory.
  
  */
 pckad_sysconfig* create_pckad_sysconfig();
 
 /*
- free_pckad_sysconfig:
- =======================
- rilascia la memoria allocata per la struttura dati pckad_sysconfig.
- Se psc == NULL, non effettua alcuna operazione.
+ Frees the memory reserved for psc. If psc == NULL, it does nothing.
  
- @psc: un'istanza della struttura dati pckad_sysconfig.
+ @psc: An instance of the pckad_sysconfig structure.
  
  */
 void free_pckad_sysconfig(pckad_sysconfig *psc);
 
+/*
+ Checks whether the system configurations is consistent, i.e. all the configuration parameters
+ have valid values.
+ 
+ @psc: An instance of the pckad_sysconfig structure.
+ 
+ returns: code representing the operation result.
+ */
 int check_consistency(pckad_sysconfig *scnfg);
 
 #endif
