@@ -20,14 +20,12 @@
 #define BCNF_OUT_OF_MEM 0
 
 /*
- pckad_sysconfig:
- ================
- carica le configurazione del sistema nella struttura pckad_sysconfig.
+ Loads the system configuration into the pckad_sysconfig structure.
  
- @root: percorso della cartella in cui si trovano i file di configurazione.
- @stcode: lo status code; indica l'esito dell'operazione.
+ @root: Configuration files path.
+ @stcode: Code representing the operation result.
  
- returns: la struttura dati contenente le configurazioni
+ returns: Data structure containing the system configuration.
  */
 pckad_sysconfig* build_config(const char *root, int *stcode);
 
