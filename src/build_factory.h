@@ -12,14 +12,11 @@
 #include "core_functionalities.h"
 
 /*
- get_build_model:
- ================
- implementa un factory per la funzione di costruzione incrementale
- di un modello, durante la fase di training.
+ Provides a factory function for functions that implement the incremental construction of a model, during the training phase.
  
- @strategy: discriminante della strategia di apprendimento.
+ @strategy: flag used to choose the construction strategy.
  
- returns: puntatore alla funzione inplementa la strategia desiderata.
+ returns: A pointer to the function that implements the desired strategy.
  */
 build_model get_build_model(char strategy);
 
