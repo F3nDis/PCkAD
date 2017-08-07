@@ -21,33 +21,31 @@
 #define HTTP_PRPROC_OUT_OF_MEM 0
 
 /*
- module_init:
- ==================
- esegue l'inizializzazione del modulo di pre elaborazione del protocollo HTTP.
+ Initialises the HTTP preprocessing library.
  
- @cnfs_path: percorso della cartella contenente i file di configurazione.
+ @cnfs_path: Configuration file path.
  
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: code representing in the operation result.
  */
 int http_module_init(const char *cnfs_path);
 
 /*
- preprocess:
- ===========
- elabora il pacchetto HTTP ricevuto in input e deriva la rappresentazione
- interna, oggetto di analisi nelle fasi successive.
+ Processes an HTTP payload, represented by the input parameter payload, in order to
+ extract its relevant payload and derive a PCkAD packet. Two types of HTTP payloads are supported so far,
+ i.e. GET and POST payloads.
+ When onlyparams = 1 then PCkAD considers only the URL parameters (body) as the relevant payload of 
+ a GET (POST) packet, otherwise the URL is also considered part of the relevant payload.
  
- @ppkt: struttura dati contenente la rappresentazione interna del pacchetto HTTP.
- @pdata: struttura dati contenente i dati richiesti dal modulo di pre elaborazione.
+ @ppkt: Structure representing a PCkAD packet.
+ @payload: Contains an HTTP payload.
+ @plen: The payload length.
  
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: code representing the operation result.
  */
 int http_preprocess (pckad_pkt *ppkt, unsigned char *payload, unsigned int plen);
 
 /*
- http_module_destr:
- ==================
- rilascia le risorse allocate per il modulo di pre elaborazione del protocollo HTTP.
+ Frees the memory reserved for the HTTP preprocessing library.
  */
 void http_module_destr();
 
