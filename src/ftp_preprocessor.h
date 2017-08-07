@@ -19,33 +19,29 @@
 #define FTP_PRPROC_OUT_OF_MEM 1
 
 /*
- module_init:
- ==================
- esegue l'inizializzazione del modulo di pre elaborazione del protocollo FTP.
+ Initialises the FTP preprocessing library.
  
- @cnfs_path: percorso della cartella contenente i file di configurazione.
+ @cnfs_path: Configuration file path.
  
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: code representing in the operation result.
  */
 int ftp_module_init(const char *cnfs_path);
 
 /*
- preprocess:
- ===========
- elabora il pacchetto FTP ricevuto in input e deriva la rappresentazione
- interna, oggetto di analisi nelle fasi successive.
+ Processes an FTP payload, represented by the input parameter payload, in order to
+ extract its relevant payload and derive a PCkAD packet. PCkAD considers the entire FTP payload as relevant,
+ therefore it just build a PCkAD packet.
  
- @ppkt: struttura dati contenente la rappresentazione interna del pacchetto FTP.
- @pdata: struttura dati contenente i dati richiesti dal modulo di pre elaborazione.
+ @ppkt: Structure representing a PCkAD packet.
+ @payload: Contains an FTP payload.
+ @plen: The payload length.
  
- returns: il codice di stato rappresentante l'esito dell'operazione.
+ returns: code representing the operation result.
  */
 int ftp_preprocess (pckad_pkt *ppkt, unsigned char *payload, unsigned int plen);
 
 /*
- http_module_destr:
- ==================
- rilascia le risorse allocate per il modulo di pre elaborazione del protocollo FTP.
+ Frees the memory reserved for the FTP preprocessing library.
  */
 void ftp_module_destr();
 
