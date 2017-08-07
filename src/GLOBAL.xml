@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <global>
-    <n> 7 </n> <!-- Espressa in byte -->
-    <lck> 21 </lck> <!-- Espressa in byte -->
-    <strategy> 0 </strategy> <!-- 0: GS, 1: LS, 2: 2LS -->
-    <format> 0 </format> <!-- 0: PCAP, 1: TXT -->
+    <n> 7 </n> <!-- The ngram length (in bytes) -->
+    <lck> 21 </lck> <!-- The chunk length (in bytes) -->
+    <strategy> 0 </strategy> <!-- Training a classification strategy. 0: GS, 1: LS, 2: 2LS -->
+    <format> 0 </format> <!-- Packet format. 0: PCAP, 1: TXT -->
     
+    <!-- Each target's child denotes a specific traffic profile (additional characteristics may be determined by specific protocols) -->
     <targets> <!-- 0: HTTP, 1: FTP 21 -->
         <protocol id = "0">
-            <port dir = "1"> 80 </port> <!-- 1: incoming, 0: outgoing -->
-            <threshold> 0.4 </threshold>
+            <port dir = "1"> 80 </port> <!-- Packet direction. 1: incoming, 0: outgoing -->
+            <threshold> 0.4 </threshold> <!-- Threshold used for the classification process, with values between 0 and 1-->
         </protocol>
     </targets>
 </global>
