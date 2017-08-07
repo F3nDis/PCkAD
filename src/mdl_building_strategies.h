@@ -12,38 +12,40 @@
 #include "pckad_model.h"
 
 /**
- Implementa la costruzione incrementale di un modello mdl, a partire dal
- contenuto rilevante pd di una porzione di pacchetto, seguendo la strategia 2 Level Strategy.
- L'apprendimento si basa sugli ngram e la suddivisione del contenuto del pacchetto in chunk.
+ Implements an incremental construction of a model mdl, by employing the 2LS strategy.
+ PCkAD learns the characteristics of mdl by inspecting the relevant payload pd
+ of network packets. The learning process is based on the usage of the ngram technique
+ and the chunks.
  
- @param mdl il modello da costruire.
- @param pd struttura dati associata al pacchetto da analizzare.
- @param n lunghezza degli ngram (espressa in byte).
- @param lck lunghezza di un singolo chunk (espressa in byte).
+ @param mdl The model to build.
+ @param pd The relevant payload.
+ @param n The ngram length.
+ @param lck The chunk length.
  */
 void build_2lsmdl (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck);
 
 /**
- Implementa la costruzione incrementale di un modello mdl, a partire dal
- contenuto rilevante pd di una porzione di pacchetto, seguendo la strategia Local Strategy.
- L'apprendimento si basa sugli ngram e la suddivisione del contenuto del pacchetto in chunk.
+ Implements an incremental construction of a model mdl, by employing the 2LS strategy.
+ PCkAD learns the characteristics of mdl by inspecting the relevant payload pd
+ of network packets. The learning process is based on the usage of the ngram technique
+ and the chunks.
  
- @param mdl il modello da costruire.
- @param pd struttura dati associata al pacchetto da analizzare.
- @param n lunghezza degli ngram (espressa in byte).
- @param lck lunghezza di un singolo chunk (espressa in byte).
+ @param mdl The model to build.
+ @param pd The relevant payload.
+ @param n The ngram length.
+ @param lck The chunk length.
  */
 void build_lsmdl (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck);
 
 /**
- Implementa la costruzione incrementale di un modello mdl, a partire dal
- contenuto rilevante pd di una porzione di pacchetto, seguendo la strategia Global Strategy.
- L'apprendimento si basa sugli ngram.
+ Implements an incremental construction of a model mdl, by employing the 2LS strategy.
+ PCkAD learns the characteristics of mdl by inspecting the relevant payload pd
+ of network packets. The learning process is based on only the usage of the ngram technique.
  
- @param mdl il modello da costruire.
- @param pd struttura dati associata al pacchetto da analizzare.
- @param n lunghezza degli ngram (espressa in byte).
- @param lck lunghezza di un singolo chunk (espressa in byte).
+ @param mdl The model to build.
+ @param pd The relevant payload.
+ @param n The ngram length.
+ @param lck The chunk length.
  */
 void build_gsmdl (pckad_model *mdl, pkt_data *pd, unsigned char n, unsigned short lck);
 
