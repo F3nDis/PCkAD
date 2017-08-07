@@ -13,22 +13,25 @@
 #include "pckad_sysconfig.h"
 
 /*
- train_on_pkt:
- =============
- esegue una costruzione incrementale dei modelli models di PCkAD,
- a partire dal pacchetto pkt, di cui viene specificata la lunghezza
- plen. Restituisce un codice numerico rappresentante l'esito
- dell'operazione.
+ It incrementally builds models representing different types of network traffic.
+ Each incremental step involves the processing of a single network packet.
+ It returns a numeric code representing the operation result.
  
- @pkt: pacchetto di rete (intestazioni + contenuto)
- @plen: lunghezza del pacchetto di rete.
- @models: lista contenente i modelli correntemente in costruzione.
- @scnfg: configurazione del sistema.
+ @pkt: A network packet, containing both headers and payload.
+ @plen: The packet length.
+ @models: List containing the models.
+ @scnfg: System configuration.
  
- returns: codice numerico indicante l'esito dell'operazione.
+ returns: a numeric code representing the operation result.
  */
 int train_on_pkt(const unsigned char *pkt, unsigned int plen, glist *models, pckad_sysconfig *scnfg);
 
+/*
+ Performs operations needed at the end of the training phase.
+ 
+ @Models: list of the models built by PCkAD.
+ @scnfg: System configuration.
+*/
 void end_training (glist *models, pckad_sysconfig *scnfg);
 
 #endif /* training_module_h */
