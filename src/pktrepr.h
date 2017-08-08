@@ -15,47 +15,52 @@
 #define DEST_PORT 1
 
 /*
- Contiene i dati relativi ad una porzione del payload di un
- pacchetto.
+ Structure describing a relevant payload..
  */
 typedef struct pkt_data
 {
-    unsigned char *data;// i dati della porzione
-    unsigned int len;// numero di caratteri in data, fatta eccezione per il carattere nullo
-    char type;// determina il tipo di porzione del payload
+    unsigned char *data;// The relevant payload
+    unsigned int len;// the payload length (does not take into account the null character)
+    char type;// denotes the type of payload (see protocol codes)
 }pkt_data;
 
 /*
- Rappresentazione interna di un pacchetto di rete in PCkAD.
- Si compone di informazioni di controllo e dati utente o payload.
- I dati utente possono essere rappresentati da un numero di porzioni >= 1.
- Il numero di porzioni non deve essere necessariamente specificato in input.
+ Internal representation of the network packet, here referred to as PCkAD packet. 
+ It contains both header and payload data derived from a network packet. 
+ It has been designed to contain more than one relevant payload. 
+ The relevant payloads are stored in a linked list (glist), therefore there is no need to 
+ know the number of payloads before constructing a PCkAD packet.
  */
 typedef struct pckad_pkt
 {
-    // dati utente
-    glist *portions;// lista contenente le porzioni del pacchetto (pkt_data)
+    // user data
+    glist *portions;// List containing the relevanta payloads (pkt_data)
     
-    // informazioni di controllo
-    unsigned short tcp_port;// porta dell'intestazione TCP
-    char dirc;// direzione del pacchetto: per capire se la porta corrisponde alla destinazione o sorgente
+    // control data
+    unsigned short tcp_port;// TCP port
+    char dirc;// packet direction
 }pckad_pkt;
 
 /*
- Inizializza la struttura dati pckad_pkt.
- Restituisce NULL in caso di memoria insufficiente.
+ Initialises an instance of the pckad_pkt structure. 
+ Portions is initialised with default size. It returns NULL if there is not enough memory.
+ 
+ returns: an instance of the pckad_pkt structure. NULL if there is not enough memory.
  */
 pckad_pkt* pckad_pkt_dinit();
 
 /*
- Inizializza la struttura dati pckad_pkt, specificando
- in input il numero di porzioni di cui il pacchetto si compone.
- Restituisce NULL in caso di memoria insufficiente.
+ Initialises an instance of the pckad_pkt structure. 
+ Portions is initialised with size nr. It returns NULL if there is not enough memory.
+ 
+ returns: an instance of the pckad_pkt structure. NULL if there is not enough memory.
  */
 pckad_pkt* pckad_pkt_sinit( unsigned int nr);
 
 /*
- Rilascia alla memoria per la struttura dati pckad_pkt.
+ Frees the memory reserved for ppkt
+ 
+ @ppkt: PCkAD packet.
  */
 void free_pckad_pkt(pckad_pkt* ppkt);
 
