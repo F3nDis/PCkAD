@@ -14,22 +14,16 @@
 #include "preprocessor.h"
 
 /*
- inspect_pcap:
- =============
- controlla se il pacchetto pcap pkt è conforme ai
- target specificati nel file di configurazione globale.
- In caso di esito positivo inizializza la sua rappresentazione interna irep
- e la struttura dati richiesto dal modulo di pre elaborazione.
- Prevede l'allocamento di memoria per alcune variabili della struttura dati
- richiesta dal modulo di pre elaborazione.
+ Checks whether a PCAP packet pkt is valid, based on the global configuration file (see the target field).
+ If it is then irep and prpd are initialised. It allocates memory for prpd's pkt_payload.
  
- @irep: rappresentazione interna del pacchetto.
- @prpd: struttura dati richiesta dal modulo di pre elaborazione.
- @pkt: il pacchetto di rete grezzo (intestazioni + contenuto).
- @plen: lunghezza del pacchetto di rete grezzo.
- @sc: configurazione del sistema.
+ @irep: A PCkAD packet.
+ @prpd: An internal representation for a given network packet, used by the preprocessing module.
+ @pkt: A network packet containing headers and apayload, regardless of its format.
+ @plen: The packet length (headers + payload).
+ @sc: The system configuration.
  
- returns: 1 se valido, 0 altrimenti.
+ returns: 1 if the packet is valid, 0 otherwise.
  */
 char inspect_pcap (pckad_pkt *irep, prp_data *prpd, const unsigned char *pkt, unsigned int plen, pckad_sysconfig *sc);
 
