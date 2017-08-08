@@ -79,7 +79,7 @@ The function can also be employed just to check whether a ngram is stored.
  
  @return structure containing data associated to ngram.
  */
-ngram_data* get_ngrdata(model_core *mdlcore, unsigned char *ngram, char len, int *retcode);
+ngram_data* get_ngrdata(model_core *mdlcore, unsigned char *ngram, unsigned char len, int *retcode);
 
 /**
  Adds a new ngram to the data structure, as well as its data.
@@ -96,7 +96,7 @@ ngram_data* get_ngrdata(model_core *mdlcore, unsigned char *ngram, char len, int
  ii) the operation fails due to the presence of ngram in the data structure;
  iii) the operation fails due to other types of errors.
  */
-int add_ngrdata(model_core *mdlcore, unsigned char *ngram, char len, ngram_data *ngdt);
+int add_ngrdata(model_core *mdlcore, unsigned char *ngram, unsigned char len, ngram_data *ngdt);
 
 /**
  Returns all the ngrams contained in the data structure needed to query the model.
