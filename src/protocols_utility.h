@@ -12,11 +12,12 @@
 
 #include <stdlib.h>
 
-//definisco tutto ciò che mi serve per estrarre informazioni sulla macro porzioni
+//Temporary module that defines all the application protocol elements that are needed by PCkAD.
 #define CRLF "\r\n"
 
 #define HTTP_PORT 80
-#define HTTP_MAX_ELEN 1340// tiene in considerazione la lunghezza massima dell'intestazione TCP, ovverosia 100 byte (60 + 40), e dell'intestazione IP, ovverosia 60 byte
+// Takes into account the maximum length of the TCP header, i.e. 100 byte (60 + 40), and of the IP header, i.e. 60 byte
+#define HTTP_MAX_ELEN 1340
 #define HTTP_KW_DEL ' '
 #define HTTP_SBPKT_DEL '\n'
 #define HTTP_PARAM_DEL '?'
@@ -66,17 +67,28 @@
 #define TCP_MaxSS 1460
 
 /*
- Verifica se il metodo specificato in ingresso è presente nel contenuto del pacchetto specificato.
- Restituisce 1 in caso di esito positivo, 0 altrimenti.
- Assunzione: il contenuto corrisponde ad un pacchetto HTTP.
+ Checks whether the HTTP method represented by the input parameter method is specified in
+ an HTTP payload represented by payload. Returns 1 in case of positive result, 0 otherwise.
+ Assumption: payload belongs to an HTTP packet.
+ 
+ @payload: HTTP payload to process.
+ @len: The payload length.
+ @method: method to check.
+ @meth_len: The method length.
+ 
+ returns: 1 in case of positive result, 0 otherwise.
  */
 char check_http_method(unsigned char *payload, unsigned short len, char *method, unsigned short meth_len);
 
 /*
- Controlla quale metodo è presente nel contenuto dato in input.
- Restituisce il codice del metodo trovato. Qualora nessun metodo venisse trovato,
- verrebbe restituito il codice che identifica un frammento.
- Assunzione: il contenuto corrisponde ad un pacchetto HTTP.
+ Inspects an HTTP payload and returns the code representing the method found.
+ If no method is found the function assumes that payload is an HTTP fragment.
+ Assumption: payload belongs to an HTTP packet.
+ 
+ @payload: HTTP payload to process.
+ @len: The payload length.
+ 
+ returns: The code representing the method found.
  */
 char get_http_method(unsigned char *payload, unsigned short len);
 
