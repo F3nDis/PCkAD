@@ -45,8 +45,6 @@ static training_cnfg* create_training_cnfg()
     if(tc != NULL)
     {
         tc->storemodels = 0;
-        tc->clustering = 0;
-        tc->kp = 0;
     }
     return tc;
 }
@@ -119,10 +117,6 @@ int check_consistency(pckad_sysconfig *scnfg)
     if(scnfg->gc->lck <= scnfg->gc->n)
     {
         return CONSISTENCY_LCK;
-    }
-    if(!(scnfg->tc->kp > 0 && scnfg->tc->kp <= 1))
-    {
-        return CONSISTENCY_KP;
     }
     if(scnfg->dc->mechanism != DIST_PERMATCH_MECHANISM && scnfg->dc->mechanism != DIST_PARMATCH_MECHANISM)
     {

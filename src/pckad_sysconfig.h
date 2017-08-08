@@ -26,9 +26,6 @@
 #define DIST_PERMATCH_MECHANISM 0
 #define DIST_PARMATCH_MECHANISM 1
 
-#define NO_CLUSTERING 0
-#define USE_CLUSTERING 1
-
 typedef struct protocol_data
 {
     float threshold;
@@ -49,9 +46,7 @@ typedef struct global_cnfg
 
 typedef struct training_cnfg
 {
-    float kp;// percentuale usata per determinare il valore del parametro k, per il k clustering
     char storemodels; // flag used to enable the storage of the models. 1: enabled, 0: disabled.
-    char clustering;// utilizzata per stabilire se utilizzare il clustering
 }training_cnfg;
 
 typedef struct detection_cnfg
