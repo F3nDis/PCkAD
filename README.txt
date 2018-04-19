@@ -33,8 +33,8 @@ NOTE 3: The README will be completed in the next few days as well.
 ---------------------------------------------------------------------------------
   PCkAD Dependencies
 ---------------------------------------------------------------------------------
-
-TODO 
+libpcap: for reading pcap network packets
+libxml: for parsing XML configurations files
 
 ---------------------------------------------------------------------------------
   PCkAD Installation
@@ -45,8 +45,18 @@ TODO
 ---------------------------------------------------------------------------------
   PCkAD Configuration
 ---------------------------------------------------------------------------------
+The core module of PCkAD can be configured by means of the following configuration files:
+GLOBAL.xml:
+TRAINING.xml:
+DETECTION.xml:
 
-TODO 
+The libraries that implement the inspection of a packet payload, based on a chosen protocol, can be configured with the following files:
+FTP.xml:
+HTTP.xml:
+
+The library that implements the computation of the anomaly score of a packet payload can be configured with the following file:
+ASCMPT.xml:
+
 
 ---------------------------------------------------------------------------------
   PCkAD Training
