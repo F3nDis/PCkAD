@@ -12,12 +12,15 @@ Authors:
 	Angelo Furfaro
 
 
+PLEASE CITE US if you use PCkAD for research purposes. The paper to cite is called "Exploiting content spatial distribution to improve detection of intrusions".
+
+
+Brief description:
 PCkAD is a novel semi-supervised anomaly-based IDS (Intrusion Detection System) technique, 
 which is able to detect application level content-based attacks, such as web attacks. 
 In particular, PCkAD learns legitimate traffic by splitting network packet payloads
 in portions of equal length, called chunks, and determining the within packet distribution of n-grams. 
 This strategy makes PCkAD resistant to evasion techniques as blending.
-
 
 
 NOTE 1: This is still a developmental version of PCkAD. Efforts
@@ -28,7 +31,8 @@ runtime, please let me know (luciano.argento@unical.it).
 NOTE 2: The repository contains almost all the core modules of PCkAD, 
 therefore the technique cannot be employed yet. The remaning modules will be added in the next few days.
 
-NOTE 3: The README will be completed in the next few days as well.
+NOTE 3: The README is undergoing refinement.
+
 
 ---------------------------------------------------------------------------------
   PCkAD Dependencies
@@ -47,6 +51,16 @@ TODO
 ---------------------------------------------------------------------------------
 The core module of PCkAD can be configured by means of the following configuration files:
 GLOBAL.xml:
+	n: the n-gram length (bytes)
+	lck: the chunk length (bytes)
+	strategy: classification strategy. 0: GS, 1: LS, 2: 2LS
+	format: the packet format. 0: PCAP, 1: TXT
+
+	Targets: list of protocols to analyse
+		protocol ID (to be removed): 0: HTTP, ?: FTP
+		port dir: packet direction. 0: outgoing, 1: incoming
+		port: the tcp port. Supported ports: 80 (HTTP), 21 (FTP)
+		threshold: used for classifying a packet payload. It takes values from the range [0, 1]
 TRAINING.xml:
 DETECTION.xml:
 
