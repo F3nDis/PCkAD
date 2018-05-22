@@ -100,14 +100,48 @@ are comparable; 2LS might be slightly faster.
 ---------------------------------------------------------------------------------
   PCkAD Training
 ---------------------------------------------------------------------------------
+PCkAD can only be executed via command line, for now.
+There are a few options to specify to perform both the training and detection phases.
 
-TODO 
+In this section we report the options related to the training phase:
+-T: it is used to specify the path to the directory containing a set of files representing the training set
+-t: it is used to specify the path to a single file representing the training set
+-p: it is used to specify the data format, i.e. either 0 (PCAP) or 1 (TXT)
+-s: it is used when you want to store the models on the disk. It requires the path to a directory
+
+The options T and t are both used to select the training set. The former has to be used when the training set consists of multiple files, whereas the latter when the training set is a single file.
+
+Below a few examples of training-related options are reported:
+training performed on a training set made of multiple files, containing pcap packets
+
+-T path/to/directory/ -p 0
+
+training performed on a training set made of a single files, containing txt packets
+
+-t path/to/the/trainingset -p 1
+
+
 
 ---------------------------------------------------------------------------------
   PCkAD Classification
 ---------------------------------------------------------------------------------
+We are currently developing a module to deploy PCkAD in an online fashion, so, for now, the system can only be used to analyse packets in off-line mode. 
 
-TODO 
+In order to execute the detection phase, PCkAD requires the following options (again, via command line):
+-c: it is used to specify the dataset containing the packets to analyse. It requires the path to the training set. It can be either a path to a directory (in case the training set consists of multiple files) or a path to a single file.
+-l: it is used to specify the directory containing the models that PCkAD should use during the detection phase. It is not mandatory: there is no need to specify this option if PCkAD is configured to first execute the training and then the detection phase.
+
+Examples of options:
+detection of anomalous activities in a dataset consisting of multiple files, by using existing models
+
+-l path/to/models/directory/ -c path/to/dataset/directory/
+
+detection of anomalous activities in a dataset consisting of a single file, by using models built from a training set made of multiple files
+
+-T path/to/directory/ -p 0 -c path/to/dataset/directory/
+
+
+
 
 
 Please direct all questions and comments to: luciano.argento@unical.it
