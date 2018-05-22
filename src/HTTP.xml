@@ -6,7 +6,7 @@
  FRAGMENT: 9 (enable the processing of fragments)
  -->
 <http>
-    <onlyparams> 1 </onlyparams> <!-- 0: the URL is not part of the relevant payload, 1: the URL is part of the relevant payload -->
+    <onlyparams> 1 </onlyparams> <!-- 0: the URL is part of the relevant payload, 1: the URL is not part of the relevant payload -->
     <targets> <!-- each child specifies a type of packet to consider -->
         <type> 0 </type> 
         <type> 3 </type>
